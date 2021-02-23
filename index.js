@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express();
 const fs = require("fs");
-const takendown = false;
+const takendown = true; // testing takedown
 var uuid = require("./uuid.js").uuid;
 let password = "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB";
 let items = ["Nam: Have fun creating items!"]
@@ -25,8 +25,7 @@ app.enable('case sensitive routing')
 app.use(express.static("./static"))
 
 app.get("/", (req, res) => {
-  if (takendown) return res.status(429).sendFile(__dirname + "/down.html")
-  res.send("<!DOCTYPE html><title>NamItems</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/admin')\">Admin Login</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav>")
+  takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>NamItems</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/admin')\">Admin Login</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav>")
 })
 
 app.get("/about", (req, res) => {
