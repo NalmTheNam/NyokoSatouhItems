@@ -1,0 +1,60 @@
+* {
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+}
+
+button {
+  background: rgb(60, 235, 60);
+  border: none;
+  cursor: pointer;
+}
+
+nav {
+  background: rgb(153, 255, 0);
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  background: rgba(0, 255, 0, 0.5);
+  border: 2px inset green;
+  border-radius: 15px;
+}
+
+.items {
+  background: yellow;
+  border: 2px outset orange;
+}
+
+.danger > button {
+  background: red;
+}
+
+.news-tcontainer {
+  width: 100%;
+  overflow: hidden;
+}
+
+.news-ticker {
+  border: 2px solid black;
+  border-radius: 15px;
+}
+
+.news-ticker-wrap {
+  width: 100%;
+  padding-left: 100%;
+  border-radius: 15px;
+}
+
+.news-ticker-move {
+  display: inline-block;
+  white-space: nowrap;
+  padding-right: 100%;
+  animation: ticker 15s infinite;
+}
+
+@keyframes ticker {
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
