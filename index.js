@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express();
 const fs = require("fs");
-const takendown = true; // testing takedown
+const takendown = false;
 var uuid = require("./uuid.js").uuid;
 let password = "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB";
 let items = ["Nam: Have fun creating items!"]
