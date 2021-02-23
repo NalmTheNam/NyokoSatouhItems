@@ -7,9 +7,9 @@ let password = "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB";
 let items = ["Nam: Have fun creating items!"]
 let deleteditems = [];
 let recentUser = "";
-items = JSON.parse(fs.readFileSync(__dirname + "/save/savefle.json", "utf-8"));
-deleteditems = JSON.parse(fs.readFileSync(__dirname + "/save/savefle2.json", "utf-8"));
-recentUser = JSON.parse(fs.readFileSync(__dirname + "/save/savefle3.json", "utf-8"));
+items = JSON.parse(fs.readFileSync("./save/savefle.json", "utf-8"));
+deleteditems = JSON.parse(fs.readFileSync("./save/savefle2.json", "utf-8"));
+recentUser = JSON.parse(fs.readFileSync("./save/savefle3.json", "utf-8"));
 const news = ["There is a total of " + items.length + " items", "Recent name maked an item is " + recentUser]
 let randomizeNews = Math.floor(Math.random() * news.length)
 let newsThing = news[randomizeNews]
@@ -52,11 +52,7 @@ app.get("/admin", (req, res) => {
 app.get("/didLogin", (req, res) => {
   if (takendown) return res.status(429).sendFile(__dirname + "/down.html")
   if (req.query.password == undefined || req.query.password == "") return res.status(403).send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><h1>Password is empty!</h1><button onclick=\"location.href='/admin'\">Go back</button>");
-  if (uuid(req.query.password) == "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB") {
-    res.send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + news[randomizeNews] + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.replace('/deletedItems')\">Show deleted items</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav>");
-  } else {
-    res.status(403).send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><h1>Wrong password!</h1><button onclick=\"location.href='/admin'\">Go back</button>");
-  }
+  uuid(req.query.password) == "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB" ? res.send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + news[randomizeNews] + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.replace('/deletedItems')\">Show deleted items</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav>") : res.status(403).sendFile(__dirname + "/wrong.html");
 })
 
 app.get("/deleteItem", (req, res) => {
@@ -99,12 +95,16 @@ app.get("/deletePermamently", (req, res) => {
   }
 })
 
+app.use((req, res) => {
+	res.status(404).sendFile(__dirname + '/notfound.html');
+});
+
 app.listen(3000, () => {
   console.log("Listening...")
 })
 
 setInterval(() => {
-  fs.writeFileSync(__dirname + "/save/savefle.json", JSON.stringify(items));
-  fs.writeFileSync(__dirname + "/save/savefle2.json", JSON.stringify(deleteditems));
-  fs.writeFileSync(__dirname + "/save/savefle3.json", JSON.stringify(recentUser));
+  fs.writeFileSync("./save/savefle.json", JSON.stringify(items));
+  fs.writeFileSync("./save/savefle2.json", JSON.stringify(deleteditems));
+  fs.writeFileSync("./save/savefle3.json", JSON.stringify(recentUser));
 }, 5000)
