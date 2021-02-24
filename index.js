@@ -4,12 +4,12 @@ const fs = require("fs");
 const takendown = false;
 var uuid = require("./uuid.js").uuid;
 let password = "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB";
-let items = ["Nam: Have fun creating items!"]
+let items = []
 let deleteditems = [];
 let recentUser = "";
-items = JSON.parse(fs.readFileSync("./save/savefle.json", "utf-8"));
-deleteditems = JSON.parse(fs.readFileSync("./save/savefle2.json", "utf-8"));
-recentUser = JSON.parse(fs.readFileSync("./save/savefle3.json", "utf-8"));
+items = JSON.parse(fs.readFileSync("./save/savefle.json"));
+deleteditems = JSON.parse(fs.readFileSync("./save/savefle2.json"));
+recentUser = JSON.parse(fs.readFileSync("./save/savefle3.json"));
 const news = ["There is a total of " + items.length + " items", "Recent name maked an item is " + recentUser]
 let randomizeNews = Math.floor(Math.random() * news.length)
 let newsThing = news[randomizeNews]
@@ -25,7 +25,7 @@ app.enable('case sensitive routing')
 app.use(express.static("./static"))
 
 app.get("/", (req, res) => {
-  takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>NamItems</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/admin')\">Admin Login</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav>")
+  takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>NamItems</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/admin')\">Admin Login</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav><br>Current Version: v1.301")
 })
 
 app.get("/about", (req, res) => {
@@ -37,7 +37,7 @@ app.get("/changelogs", (req, res) => {
 })
 
 app.get("/create", (req, res) => {
-  items.push(req.query.item)
+  items.push(req.query.user + " maked " + req.query.item)
   recentUser = req.query.user
 })
 
@@ -52,7 +52,7 @@ app.get("/admin", (req, res) => {
 app.get("/didLogin", (req, res) => {
   if (takendown) return res.status(429).sendFile(__dirname + "/down.html")
   if (req.query.password == undefined || req.query.password == "") return res.status(403).send(__dirname + "/empty.html");
-  uuid(req.query.password) == "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB" ? res.send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + news[randomizeNews] + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.replace('/deletedItems')\">Show deleted items</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav>") : res.status(403).sendFile(__dirname + "/wrong.html");
+  uuid(req.query.password) == "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB" ? res.send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + news[randomizeNews] + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.replace('/deletedItems')\">Show deleted items</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav><br>Current Version: v1.301") : res.status(403).sendFile(__dirname + "/wrong.html");
 })
 
 app.get("/deleteItem", (req, res) => {
@@ -71,7 +71,7 @@ app.get("/deleteItem", (req, res) => {
       while (items.length) {
         deleteditems.push(items.pop())
       }
-      if (items.length) res.redirect("/didLogin?password=" + req.query.password);
+      if (!items.length) res.redirect("/didLogin?password=" + req.query.password);
     }
   } else {
     res.status(403).send("Access denied");
@@ -100,9 +100,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  if (res.headersSent) {
-    return next(err)
-  }
+  console.log(err)
   res.status(500).sendFile(__dirname + "/err.html")
 })
 

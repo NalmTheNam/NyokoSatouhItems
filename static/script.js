@@ -6,7 +6,7 @@ function create() {
     return;
   }
   let xhr = new XMLHttpRequest()
-  xhr.open("GET", "/create?item=" + args + "&name=" + argz)
+  xhr.open("GET", "/create?item=" + args + "&user=" + argz)
   xhr.send()
   document.getElementById('wip').value = ""
   document.getElementById('wip1').value = ""
