@@ -14,5 +14,5 @@ function create() {
 }
 
 function checkPass() {
-  location.replace('/didLogin?password=' + document.getElementById('txt').value)
+  location.href = '/didLogin?password=' + document.getElementById('txt').value
 }

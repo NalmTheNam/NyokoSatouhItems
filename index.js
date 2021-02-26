@@ -2,6 +2,21 @@ const express = require("express")
 const app = express();
 const fs = require("fs");
 const takendown = false;
+/* 
+const ach = require("./ach.json") // Achievements are real unfinished
+let i = 0
+function checkAch(c = false) {
+  if (c) {
+    for (i = 0; i < ach.length; i++) { 
+      console.log(ach[i].unlocked) 
+    }
+  } else {
+    for (i = 0; i < ach.length; i++) { 
+      console.log(!ach[i].unlocked) 
+    }
+  }
+} 
+*/
 var uuid = require("./uuid.js").uuid;
 let password = "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB";
 let items = []
@@ -25,7 +40,7 @@ app.enable('case sensitive routing')
 app.use(express.static("./static"))
 
 app.get("/", (req, res) => {
-  takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>NamItems</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/admin')\">Admin Login</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav><br>Current Version: v1.301")
+  takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>NamItems</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\">Create an item</button><br><br><button onclick=\"location.href = '/admin'\">Admin Login</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav><br>Current Version: v1.401")
 })
 
 app.get("/about", (req, res) => {
@@ -37,7 +52,7 @@ app.get("/changelogs", (req, res) => {
 })
 
 app.get("/create", (req, res) => {
-  items.push(req.query.user + " maked " + req.query.item)
+  items.push(req.query.user + " made " + req.query.item)
   recentUser = req.query.user
 })
 
@@ -51,8 +66,8 @@ app.get("/admin", (req, res) => {
 
 app.get("/didLogin", (req, res) => {
   if (takendown) return res.status(429).sendFile(__dirname + "/down.html")
-  if (req.query.password == undefined || req.query.password == "") return res.status(403).send(__dirname + "/empty.html");
-  uuid(req.query.password) == "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB" ? res.send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + news[randomizeNews] + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.replace('/deletedItems')\">Show deleted items</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav><br>Current Version: v1.301") : res.status(403).sendFile(__dirname + "/wrong.html");
+  if (req.query.password == undefined || req.query.password == "") return res.status(403).sendFile(__dirname + "/empty.html");
+  uuid(req.query.password) == "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB" ? res.send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + news[randomizeNews] + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.href = '/deletedItems'\">Show deleted items</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav><br>Current Version: v1.401") : res.status(403).sendFile(__dirname + "/wrong.html");
 })
 
 app.get("/deleteItem", (req, res) => {
