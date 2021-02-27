@@ -1,14 +1,4 @@
-[
-  {
-    "name": "First Item",
-    "unlocked": true
-  },
-  {
-    "name": "Second Item",
-    "unlocked": true
-  },
-  {
-    "name": "Four The BFB Character",
-    "unlocked": true
-  }
-]
+{
+  "incomplete": ["25 items"],
+  "completed": ["The first item", "2 items", "5 items", "10 items"]
+}
