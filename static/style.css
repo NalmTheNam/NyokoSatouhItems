@@ -59,7 +59,8 @@ a {
   }
 }
 
-.ERROR404{
+.ERROR404 {
   color: rgb(100, 255, 69);
+  text-shadow: 0 0 1.75px gray;
   font-size: 20px;
 }
