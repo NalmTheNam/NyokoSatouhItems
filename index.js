@@ -3,6 +3,7 @@ const app = express();
 const fs = require("fs");
 const takendown = false;
 const ach = require("./ach.json")
+const banned = []
 // let i = 0
 function checkAch(c = false) {
   if (c) return ach.completed.join("<br>")
@@ -31,14 +32,17 @@ app.enable('case sensitive routing')
 app.use(express.static("./static"))
 
 app.get("/", (req, res) => {
-  takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>NamItems</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\">Create an item</button><br><br><button onclick=\"location.href = '/admin'\">Admin Login</button><br><br><button onclick=\"location.href = '/achievements'\">Achievements</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav><br>Current Version: v2.01")
+  if (banned.includes(req.ip)) return res.status(403).sendFile(__dirname + "/banned.html")
+  takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>NamItems</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\">Create an item</button><br><br><button onclick=\"location.href = '/admin'\">Admin Login</button><br><br><button onclick=\"location.href = '/achievements'\">Achievements</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav><br>Current Version: v2.02")
 })
 
 app.get("/about", (req, res) => {
+  if (banned.includes(req.ip)) return res.status(403).sendFile(__dirname + "/banned.html")
   takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.sendFile(__dirname + "/about.html")
 })
 
 app.get("/changelogs", (req, res) => {
+  if (banned.includes(req.ip)) return res.status(403).sendFile(__dirname + "/banned.html")
   takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.sendFile(__dirname + "/changelogs.html")
 })
 
@@ -48,21 +52,25 @@ app.get("/create", (req, res) => {
 })
 
 app.get("/createItem", (req, res) => {
+  if (banned.includes(req.ip)) return res.status(403).sendFile(__dirname + "/banned.html")
   takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.sendFile(__dirname + "/create.html")
 });
 
 app.get("/achievements", (req, res) => {
+  if (banned.includes(req.ip)) return res.status(403).sendFile(__dirname + "/banned.html")
   res.send("<!DOCTYPE html><title>NamItems Achievements</title><link href='style.css' rel='stylesheet'><div class='items'><h1>Achievements</h1></div><h3>Completed</h3>" + checkAch(true) + "<h3>Incomplete</h3>" + checkAch())
 })
 
 app.get("/admin", (req, res) => {
+  if (banned.includes(req.ip)) return res.status(403).sendFile(__dirname + "/banned.html")
   takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.sendFile(__dirname + "/login.html")
 })
 
 app.get("/didLogin", (req, res) => {
   if (takendown) return res.status(429).sendFile(__dirname + "/down.html")
+  if (banned.includes(req.ip)) return res.status(403).sendFile(__dirname + "/banned.html")
   if (req.query.password == undefined || req.query.password == "") return res.status(403).sendFile(__dirname + "/empty.html");
-  uuid(req.query.password) == "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB" ? res.send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + news[randomizeNews] + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.href = '/deletedItems'\">Show deleted items</button><br><br><button onclick=\"location.href = '/achievements'\">Achievements</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav><br>Current Version: v2.01") : res.status(403).sendFile(__dirname + "/wrong.html");
+  uuid(req.query.password) == "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB" ? res.send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + news[randomizeNews] + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.href = '/deletedItems'\">Show deleted items</button><br><br><button onclick=\"location.href = '/achievements'\">Achievements</button><br><br><nav><br><a href='/about'>About</a> <a href='/changelogs'>Changelogs</a><br><br></nav><br>Current Version: v2.02") : res.status(403).sendFile(__dirname + "/wrong.html");
 })
 
 app.get("/deleteItem", (req, res) => {
@@ -89,6 +97,7 @@ app.get("/deleteItem", (req, res) => {
 })
 
 app.get("/deletedItems", (req, res) => {
+  if (banned.includes(req.ip)) return res.status(403).sendFile(__dirname + "/banned.html")
   takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>Deleted items</title><link href='style.css' rel='stylesheet'><div class='items'><h1>Deleted items </h1></div><h2>These are non-items. Take care of it.</h2>" + deleteditems.join("<br>") + "<br><br><button onclick=\"history.back();\">Go back</button><div class='danger'><h2>DANGER ZONE</h2><button onclick=\"location.replace('/deletePermamently?direction=last')\">Delete last item permamently</button><br><br><button onclick=\"location.replace('/deletePermamently?direction=first')\">Delete first item permamently</button><br><br><button onclick=\"location.replace('/deletePermamently?direction=all')\">Delete all items permamently</button></div>");
 })
 
