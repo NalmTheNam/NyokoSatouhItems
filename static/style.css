@@ -53,14 +53,22 @@ a {
   animation: ticker 15s infinite;
 }
 
+.ach {
+  background: gray;
+  border-radius: 10px;
+  font-family: 'Segoe UI Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ach > i {
+  font-family: inherit;
+}
+
+.ach.complete {
+  background: green;
+}
+
 @keyframes ticker {
   100% {
     transform: translate3d(-100%, 0, 0);
   }
-}
-
-.ERROR404 {
-  color: rgb(100, 255, 69);
-  text-shadow: 0 0 1.75px gray;
-  font-size: 20px;
 }
