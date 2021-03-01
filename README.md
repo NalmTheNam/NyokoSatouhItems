@@ -8,10 +8,9 @@
 ### If you want to collab here, follow these steps:
 1. If you have an discord account, DM me. (my account is NamIsAWinner#6429)
 > If Nam does not respond in an long time, you may want to DM Hunter, one of Nam's partners at yooperhunter2#5826. (note that this is not an business and are not affiliated with repl.it in any way)
-but Hunter might be able to contact Nam and (possibly) assist you, he maybe offline. If he is you may need to wait. (this may take up to around 5 days)
+but yooperhunter2#5826 might be able to contact Nam and (possibly) assist you, he maybe offline. If he is you may need to wait. (this may take up to around 5 days)
 
 2. You send a request to NyokoSatouhSato in repl.it. 
-> Hunter may fail if Nam does not respond to this as he can't invite other people.
 3. If NyokoSatouhSato denies/accepts your request, you cannot make another one until NyokoSatouhSato invites you to collaborate or send an invite to you.
 
 ### Roles (discord only!):

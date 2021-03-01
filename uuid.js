@@ -11,7 +11,7 @@ String.prototype.hashCode = function() {
   return hash;
 }
 
-function uuid(txt) {
+function uuid(txt,items) {
   seed = txt.hashCode()
   function random() {
     var x = Math.sin(seed++) * 10000;
@@ -24,4 +24,4 @@ function uuid(txt) {
   dip.split('').forEach((char) => { if (char !== "X") { dd += char } else { dd += choose(letters) } })
   return dd;
 }
-module.exports = { uuid };
+module.exports = { uuid: uuid };

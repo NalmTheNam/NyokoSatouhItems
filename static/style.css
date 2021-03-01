@@ -9,18 +9,6 @@ button {
   cursor: pointer;
 }
 
-nav {
-  background: rgb(153, 255, 0);
-}
-
-a {
-  text-decoration: none;
-  color: black;
-  background: rgba(0, 255, 0, 0.5);
-  border: 2px inset green;
-  border-radius: 15px;
-}
-
 .items {
   background: yellow;
   border: 2px outset orange;

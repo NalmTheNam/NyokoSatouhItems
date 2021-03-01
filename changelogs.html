@@ -6,34 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Changelogs</title>
   <link href="style.css" rel="stylesheet">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
 </head>
 
 <body>
   <h1>Changelogs</h1>
-  <h2>Alpha Testing</h2>
+  <h3>Alpha Testing</h3>
   <ul>
-    <li>Nam tests <a href="/create?item=test">/create?item=test</a> to see if it works</li>
+    <li>Nam tests <button onclick="location.href = '/create?item=test'">/create?item=test</button> to see if it works</li>
   </ul>
-  <h2>Beta Testing</h2>
+  <h3>Beta Testing</h3>
   <ul>
     <li>Nam tests GET method to create an item</li>
   </ul>
-  <h2>v1.0</h2>
+  <h3>v1.0</h3>
   <ul>
     <li>10-30 items are added, but soon wiped out due to restart of express</li>
     <li>Design added</li>
   </ul>
-  <h2>v1.1</h2>
+  <h3>v1.1</h3>
   <ul>
     <li>localStorage added, but soon DuckArgument realizes it's using fs</li>
     <li>Downtime added</li>
   </ul>
-  <h2>v1.11</h2>
+  <h3>v1.11</h3>
   <ul>
     <li>Added Admin Panel</li>
     <li>trust proxy enabled</li>
   </ul>
-  <h2>v1.2</h2>
+  <h3>v1.2</h3>
   <ul>
     <li>Admin Panel password changed because of uuid</li>
     <li>Admin Panel Login method changed</li>
@@ -41,54 +43,76 @@
   </ul>
   <h2>v1.21</h2>
   <ul>
-    <li>Input username in <a href="/createItem">/createItem</a> added</li>
+    <li>Input username in <button onclick="location.href = '/createItem'">/createItem</button> added</li>
     <li>case sensitive routing added</li>
   </ul>
-  <h2>v1.22</h2>
+  <h3>v1.22</h3>
   <ul>
     <li>Added downtime on the rest of pages when down is true</li>
     <li>Prevented empty item name and user name</li>
   </ul>
-  <h2>v1.221</h2>
+  <h3>v1.221</h3>
   <ul>
     <li>Styled "a" element</li>
   </ul>
-  <h2>v1.23</h2>
+  <h3>v1.23</h3>
   <ul>
     <li>Added 404 page</li>
     <li>Added 500 page</li>
   </ul>
-  <h2>v2.0</h2>
+  <h3>v2.0</h3>
   <ul>
     <li>Fixed 500 page</li>
     <li>Attempt to minify code</li>
     <li>Fixed "undefined" recent user when you create an item</li>
     <li>When created a item, it says (username) maked (item).</li>
   </ul>
-  <h2>v2.001</h2>
+  <h3>v2.001</h3>
   <ul>
     <li>Fixed redirects</li>
   </ul>
-  <h2>v2.002 <i>(v2.001 more fix version)</i></h2>
+  <h3>v2.002 <i>(v2.001 more fix version)</i></h3>
   <ul>
     <li>Fixed the rest of redirects</li>
   </ul>
-  <h2>v2.01</h2>
+  <h3>v2.01</h3>
   <ul>
     <li>Added achievements, soon I made it optimized</li>
-    <li>Added "Achievements" button on <a href="/">/</a> and <a href="/didLogin">/didLogin</a></li>
+    <li>Added "Achievements" button on <button onclick="location.href = '/'">/</a> and <button onclick="location.href = '/didLogin'">/didLogin</button></li>
   </ul>
-  <h2>v2.1</h2>
+  <h3>v2.1</h3>
   <ul>
     <li>Removed useless items</li>
     <li>Added 1 more achievement</li>
     <li>Added an motto for achievements</li>
   </ul> 
-  <h2>Planned</h2>
+  <h3>v2.11</h3>
+  <ul>
+    <li>Added banning</li>
+    <li>Fixed banning (NamItems got banned worldwide so it is fixed)</li>
+  </ul>
+  <h3>v2.111</h3>
+  <ul>
+    <li>Fixed uuid ruin</li>
+  </ul>
+  <h3>v2.112</h3>
+  <ul>
+    <li>Fixed TypeError in app.use line 123</li>
+  </ul>
+  <h3>v2.12</h3>
   <ul>
     <li>Remove the rest of useless items</li>
+    <li>Made code clean</li>
   </ul>
-  <a href="/">Go back</a>
+  <h3>v2.13</h3>
+  <ul>
+    <li>Materialize added</li>
+  </ul>
+  <h3>Planned</h3>
+  <ul>
+    <li>Nest ternary operators</li>
+  </ul>
+  <button onclick="location.href = '/'">Go back</button>
 </body>
 
 </html>
