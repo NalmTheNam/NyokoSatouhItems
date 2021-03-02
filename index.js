@@ -8,7 +8,8 @@ const banned = []
 function checkAch(c = false) {
   if (c) return "<div class='ach complete'>" + ach.completed.join("<br>") + "</div>"
   else return "<div class='ach'>" + ach.incomplete.join("<br>") + "</div>"
-} 
+}
+
 var uuid = require("./uuid.js").uuid;
 let password = "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB";
 let items = []
@@ -31,8 +32,12 @@ app.enable('case sensitive routing')
 
 app.use(express.static("./static"))
 
+function web(t = "NamItems", a = "") {
+  return "<!DOCTYPE html><title>" + t + "</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\">Create an item</button><br><br><button onclick=\"location.href = '/admin'\">Admin Login</button><br><br>" + a + "<br><br><button onclick=\"location.href = '/achievements'\" class='card-panel teal lighten-2'>Achievements</button><br><br><nav><button onclick=\"location.href = '/about'\">About</button> <button onclick=\"location.href = '/changelogs'\">Changelogs</button></nav><br>Current Version: v2.13"
+}
+
 app.get("/", (req, res) => {
-  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>NamItems</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\">Create an item</button><br><br><button onclick=\"location.href = '/admin'\">Admin Login</button><br><br><button onclick=\"location.href = '/achievements'\" class='card-panel teal lighten-2'>Achievements</button><br><br><nav><button onclick=\"location.href = '/about'\">About</button> <button onclick=\"location.href = '/changelogs'\">Changelogs</button></nav><br>Current Version: v2.13")
+  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send(web())
 })
 
 app.get("/about", (req, res) => {
@@ -61,7 +66,7 @@ app.get("/admin", (req, res) => {
 })
 
 app.get("/didLogin", (req, res) => {
-  banned.includes(req.ip) ? res.status(429).sendFile(__dirname + "/banned.html") : takendown ? res.status(403).sendFile(__dirname + "/down.html") : !req.query.password ? res.status(403).sendFile(__dirname + "/empty.html") : uuid(req.query.password) == password ? res.send("<!DOCTYPE html><title>NamItems as Admin</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + news[randomizeNews] + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.replace('/createItem')\">Create an item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.href = '/deletedItems'\">Show deleted items</button><br><br><button onclick=\"location.href = '/achievements'\" class='card-panel teal lighten-2'>Achievements</button><br><br><nav><button onclick=\"location.href = '/about'\">About</button> <button onclick=\"location.href = '/changelogs'\">Changelogs</button></nav><br>Current Version: v2.13") : res.status(403).sendFile(__dirname + "/wrong.html");
+  banned.includes(req.ip) ? res.status(429).sendFile(__dirname + "/banned.html") : takendown ? res.status(403).sendFile(__dirname + "/down.html") : !req.query.password ? res.status(403).sendFile(__dirname + "/empty.html") : uuid(req.query.password) == password ? res.send(web("NamItems as Admin", "<button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.href = '/deletedItems'\">Show deleted items</button>")) : res.status(403).sendFile(__dirname + "/wrong.html");
 })
 
 app.get("/deleteItem", (req, res) => {
