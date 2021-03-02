@@ -44,7 +44,7 @@ app.get("/changelogs", (req, res) => {
 })
 
 app.get("/create", (req, res) => {
-  items.push(req.query.user + " made " + req.query.item)
+  items.push(req.query.user + " made " + req.query.item + " | " + new Date())
   recentUser = req.query.user
 })
 
@@ -53,7 +53,7 @@ app.get("/createItem", (req, res) => {
 });
 
 app.get("/achievements", (req, res) => {
-  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : takendown ? res.sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>NamItems Achievements</title><link href='style.css' rel='stylesheet'><div class='items'><h1>Achievements</h1></div><h3>Completed</h3>" + checkAch(true) + "<h3>Incomplete</h3>" + checkAch() + "<br><button onclick=\"location.href = '/'\">Go back</button>")
+  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : takendown ? res.sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>NamItems Achievements</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><div class='items'><h1>Achievements</h1></div><h3>Completed</h3>" + checkAch(true) + "<h3>Incomplete</h3>" + checkAch() + "<br><button onclick=\"location.href = '/'\">Go back</button>")
 })
 
 app.get("/admin", (req, res) => {

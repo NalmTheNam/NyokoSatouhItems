@@ -21,6 +21,6 @@ but yooperhunter2#5826 might be able to contact Nam and (possibly) assist you, h
 5. Emoji Mod
 6. Trusted
 7. Helper
-8. Shadow Banned
+8. Shadow Banned 
 
-> If you want to make a modification of NamItems, you can fork this repl.
+> If you want to make a modification of NamItems, you can fork this repl.   

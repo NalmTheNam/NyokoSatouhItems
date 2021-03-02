@@ -10,7 +10,7 @@ function create() {
   xhr.send()
   document.getElementById('wip').value = ""
   document.getElementById('wip1').value = ""
-  alert("Created!")
+  M.toast({html: 'Created!'})
 }
 
 function checkPass() {
