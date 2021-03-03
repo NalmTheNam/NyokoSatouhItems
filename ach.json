@@ -1,4 +1,4 @@
 {
-  "incomplete": ["50 items -- (<i>Close to 69 items!</i>)"],
-  "completed": ["The first item -- (<i>NamItems was released</i>)", "2 items", "5 items", "10 items -- (<i>The silver achievement</i>)", "25 items -- (<i>The major achievement</i>)"]
+  "incomplete": ["\"The new era\" - Reach 100 items", "\"It starts overflowing!\" - Reach 200 items", "\"Stop DDoSing!\" - Reach 250 items"],
+  "completed": ["\"NamItems was released\" - Reach 1 item", "\"I want more items!\" - Reach 2 items", "\"I want more!\" - Reach 5 items", "\"The silver achievement\" - Reach 10 items", "\"The major achievement\" - Reach 25 items", "\"The event was started\" - Reach 50 items"]
 }
