@@ -35,7 +35,7 @@ app.use(express.static("./static"))
 
 function web(t = "NamItems", a = "", d = false) {
   function disabled() {
-    if (d) return "disabled='true'"
+    if (d) return "disabled='true' title='You are already logged in.'"
   }
   return "<!DOCTYPE html><title>" + t + "</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\">Create an item</button><br><br><button onclick=\"location.href = '/admin'\" " + disabled() + ">Admin Login</button>" + a + "<br><br><button onclick=\"location.href = '/achievements'\" class='card-panel teal lighten-2'>Achievements</button><br><br><nav><button onclick=\"location.href = '/about'\">About</button> <button onclick=\"location.href = '/changelogs'\">Changelogs</button></nav><br>Current Version: v2.14"
 }
