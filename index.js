@@ -71,7 +71,7 @@ app.get("/admin", (req, res) => {
   banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.sendFile(__dirname + "/login.html")
 })
 
-app.get("/didLogin", basicAuth({users:{admin:"NalmTehDack"},challenge:true,realm:"Admin Panel"}), (req, res) => {
+app.get("/didLogin", basicAuth({users:{admin:"NalmTehDack"},challenge:true,realm:"Admin Panel",unauthorizedResponse:"Access denied"}), (req, res) => {
   banned.includes(req.ip) ? res.status(429).sendFile(__dirname + "/banned.html") : takendown ? res.status(403).sendFile(__dirname + "/down.html") : !req.query.password ? res.status(403).sendFile(__dirname + "/empty.html") : uuid(req.query.password) == password ? res.send(web("NamItems as Admin", "<br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.href = '/deletedItems'\">Show deleted items</button>", true)) : res.status(403).sendFile(__dirname + "/wrong.html");
 })
 
