@@ -1,9 +1,11 @@
 const express = require("express")
+const basicAuth = require("express-basic-auth")
 const app = express();
 const fs = require("fs");
 const takendown = false;
 const ach = require("./ach.json")
 const banned = []
+
 // let i = 0
 
 function checkAch(c = false) {
@@ -37,7 +39,7 @@ function web(t = "NamItems", a = "", d = false) {
   function disabled() {
     if (d) return "disabled='true' title='You are already logged in.'"
   }
-  return "<!DOCTYPE html><title>" + t + "</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\">Create an item</button><br><br><button onclick=\"location.href = '/admin'\" " + disabled() + ">Admin Login</button>" + a + "<br><br><button onclick=\"location.href = '/achievements'\" class='card-panel teal lighten-2'>Achievements</button><br><br><nav><button onclick=\"location.href = '/about'\">About</button> <button onclick=\"location.href = '/changelogs'\">Changelogs</button></nav><br>Current Version: v2.14"
+  return "<!DOCTYPE html><title>" + t + "</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\">Create an item</button><br><br><button onclick=\"location.href = '/admin'\" " + disabled() + ">Admin Login</button>" + a + "<br><br><button onclick=\"location.href = '/achievements'\" class='card-panel teal lighten-2'>Achievements</button><br><br><nav><button onclick=\"location.href = '/about'\">About</button> <button onclick=\"location.href = '/changelogs'\">Changelogs</button></nav><br>Current Version: v2.15"
 }
 
 app.get("/", (req, res) => {
@@ -69,21 +71,18 @@ app.get("/admin", (req, res) => {
   banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.sendFile(__dirname + "/login.html")
 })
 
-app.get("/didLogin", (req, res) => {
+app.get("/didLogin", basicAuth({users:{admin:"NalmTehDack"},challenge:true,realm:"Admin Panel"}), (req, res) => {
   banned.includes(req.ip) ? res.status(429).sendFile(__dirname + "/banned.html") : takendown ? res.status(403).sendFile(__dirname + "/down.html") : !req.query.password ? res.status(403).sendFile(__dirname + "/empty.html") : uuid(req.query.password) == password ? res.send(web("NamItems as Admin", "<br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\">Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\">Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\">Delete all items</button><br><br><button onclick=\"location.href = '/deletedItems'\">Show deleted items</button>", true)) : res.status(403).sendFile(__dirname + "/wrong.html");
 })
 
 app.get("/deleteItem", (req, res) => {
-  if (!req.query.password) {
-    res.status(403).send("Access denied");
-    return;
-  }
+  if (!req.query.password) return res.status(403).send("Access denied")
   if (uuid(req.query.password) == password) {
     if (req.query.direction == "last") {
       deleteditems.push(items.pop())
       res.redirect("/didLogin?password=" + req.query.password)
     } else if (req.query.direction == "first") {
-      deleteditems.push(items.shift())
+      deleteditems.unshift(items.shift())
       res.redirect("/didLogin?password=" + req.query.password);
     } else if (req.query.direction == "all") {
       while (items.length) {
@@ -97,7 +96,7 @@ app.get("/deleteItem", (req, res) => {
 })
 
 app.get("/deletedItems", (req, res) => {
-  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>Deleted items</title><link href='style.css' rel='stylesheet'><div class='items'><h1>Deleted items </h1></div><h2>These are non-items. Take care of it.</h2>" + deleteditems.join("<br>") + "<br><br><button onclick=\"history.back();\">Go back</button><div class='danger'><h2>DANGER ZONE</h2><button onclick=\"location.replace('/deletePermamently?direction=last')\">Delete last item permamently</button><br><br><button onclick=\"location.replace('/deletePermamently?direction=first')\">Delete first item permamently</button><br><br><button onclick=\"location.replace('/deletePermamently?direction=all')\">Delete all items permamently</button></div>");
+  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : takendown ? res.status(429).sendFile(__dirname + "/down.html") : res.send("<!DOCTYPE html><title>Deleted items</title><link href='style.css' rel='stylesheet'><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><div class='items'><h1>Deleted items</h1></div><h2>These are non-items. Take care of it.</h2>" + deleteditems.join("<br>") + "<br><br><button onclick=\"location.href = '/'\">Go back</button><br><br><button onclick=\"location.replace('/restoreItem?direction=last&password=NamTheDuck')\">Restore last item</button><br><br><button onclick=\"location.replace('/restoreItem?direction=first&password=NamTheDuck')\">Restore first item</button><br><br><button onclick=\"location.replace('/restoreItem?direction=all&password=NamTheDuck')\">Restore all items</button><div class='danger'><h2>DANGER ZONE</h2><button onclick=\"location.replace('/deletePermamently?direction=last')\">Delete last item permamently</button><br><br><button onclick=\"location.replace('/deletePermamently?direction=first')\">Delete first item permamently</button><br><br><button onclick=\"location.replace('/deletePermamently?direction=all')\">Delete all items permamently</button></div>");
 })
 
 app.get("/deletePermamently", (req, res) => {
@@ -110,6 +109,26 @@ app.get("/deletePermamently", (req, res) => {
   } else if (req.query.direction == "all") {
     deleteditems = []
     res.redirect("/deletedItems")
+  }
+})
+
+app.get("/restoreItem", (req, res) => {
+  if (!req.query.password) return res.status(403).send("Access denied")
+  if (uuid(req.query.password) == password) {
+    if (req.query.direction == "last") {
+      items.push(deleteditems.pop())
+      res.redirect("/deletedItems")
+    } else if (req.query.direction == "first") {
+      items.unshift(deleteditems.shift())
+      res.redirect("/deletedItems")
+    } else if (req.query.direction == "all") {
+      while (deleteditems.length) {
+        items.push(deleteditems.pop())
+      }
+      if (!deleteditems.length) res.redirect("/deletedItems")
+    }
+  } else {
+    res.status(403).send("Access denied")
   }
 })
 
