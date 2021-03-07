@@ -4,7 +4,6 @@
 }
 
 button {
-  background: rgb(60, 235, 60);
   border: none;
   cursor: pointer;
 }
@@ -12,10 +11,6 @@ button {
 .items {
   background: yellow;
   border: 2px outset orange;
-}
-
-.danger > button {
-  background: red;
 }
 
 .news-tcontainer {

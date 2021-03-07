@@ -6,23 +6,25 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Create an item</title>
 	<link href="style.css" rel="stylesheet">
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'>
+
+	</script>
 </head>
 
 <body>
 	<h1>What do you want your item to be?</h1>
-  <h4>Your item name</h4>
+	<h4>Your item name</h4>
 	<input type="text" placeholder="Type here!" id="wip">
   <h4>Your username</h4>
   <input type="text" placeholder="Type here!" id="wip1"><br><br>
-  <button onclick="create()">Create!</button><br><br>
-  <button onclick="location.href = '/'">Go back</button>
+  <button onclick="create()" class='waves-effect waves-light btn green'>Create!</button><br><br>
+  <button onclick="location.href = '/'" class='waves-effect waves-light btn green'>Go back</button>
   <h3>Rules</h3>
   <ol>
     <li>You must NOT make NSFW contents or admin deletes it.</li>
     <li>No bad words, else admin moderates it or deletes it.</li>
-    <li>No DDoSing, this might cause a crash.</li>
+    <li>No DDoSing, this might cause a crash/ratelimit.</li>
   </ol>
   <script src="script.js">
       

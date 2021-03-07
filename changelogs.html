@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Changelogs</title>
-  <link href="style.css" rel="stylesheet">
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Changelogs</title>
+	<link href="style.css" rel="stylesheet">
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'>
+
+	</script>
 </head>
 
 <body>
-  <h1>Changelogs</h1>
-  <h3>Alpha Testing</h3>
-  <ul>
-    <li>Nam tests <button onclick="location.href = '/create?item=test'">/create?item=test</button> to see if it works</li>
+	<h1>Changelogs</h1>
+	<h3>Alpha Testing</h3>
+	<ul>
+		<li>Nam tests <button onclick="location.href = '/create?item=test'" class='waves-effect waves-light btn-small green'>/create?item=test</button> to see if it works</li>
   </ul>
   <h3>Beta Testing</h3>
   <ul>
@@ -22,40 +24,39 @@
   </ul>
   <h3>v1.0</h3>
   <ul>
-    <li>10-30 items are added, but soon wiped out due to restart of express</li>
     <li>Design added</li>
   </ul>
-  <h3>v1.1</h3>
+  <h3>v1.01</h3>
   <ul>
     <li>localStorage added, but soon DuckArgument realizes it's using fs</li>
     <li>Downtime added</li>
   </ul>
-  <h3>v1.11</h3>
+  <h3>v1.02</h3>
   <ul>
     <li>Added Admin Panel</li>
     <li>trust proxy enabled</li>
   </ul>
-  <h3>v1.2</h3>
+  <h3>v1.1</h3>
   <ul>
     <li>Admin Panel password changed because of uuid</li>
     <li>Admin Panel Login method changed</li>
     <li>Empty password in Admin Login no longer causes a TypeError (it caused when i was testing admin panel login)</li>
   </ul>
-  <h2>v1.21</h2>
+  <h2>v1.11</h2>
   <ul>
-    <li>Input username in <button onclick="location.href = '/createItem'">/createItem</button> added</li>
+    <li>Input username in <button onclick="location.href = '/createItem'" class='waves-effect waves-light btn-small green'>/createItem</button> added</li>
     <li>case sensitive routing added</li>
   </ul>
-  <h3>v1.22</h3>
+  <h3>v1.12</h3>
   <ul>
     <li>Added downtime on the rest of pages when down is true</li>
     <li>Prevented empty item name and user name</li>
   </ul>
-  <h3>v1.221</h3>
+  <h3>v1.121</h3>
   <ul>
     <li>Styled "a" element</li>
   </ul>
-  <h3>v1.23</h3>
+  <h3>v1.13</h3>
   <ul>
     <li>Added 404 page</li>
     <li>Added 500 page</li>
@@ -78,7 +79,7 @@
   <h3>v2.01</h3>
   <ul>
     <li>Added achievements, soon I made it optimized</li>
-    <li>Added "Achievements" button on <button onclick="location.href = '/'">/</button> and <button onclick="location.href = '/didLogin'">/didLogin</button></li>
+    <li>Added "Achievements" button on <button onclick="location.href = '/'" class='waves-effect waves-light btn-small green'>/</button> and <button onclick="location.href = '/didLogin'" class='waves-effect waves-light btn-small green'>/didLogin</button></li>
   </ul>
   <h3>v2.1</h3>
   <ul>
@@ -119,14 +120,40 @@
   </ul>
   <h3>v2.15</h3>
   <ul>
-    <li>In <button onclick="location.href = '/deletedItems'">/deletedItems</button>, you can now restore items.</li>
+    <li>In <button onclick="location.href = '/deletedItems'" class='waves-effect waves-light btn-small green'>/deletedItems</button>, you can now restore items.</li>
     <li>Prevented rickrolls</li>
+  </ul>
+  <h3>v2.151</h3>
+  <ul>
+    <li>Added "Modifications" button on <button onclick="location.href = '/'" class='waves-effect waves-light btn-small green'>/</button> and <button onclick="location.href = '/didLogin'" class='waves-effect waves-light btn-small green'>/didLogin</button></li>
+  </ul>
+  <h3>v2.16</h3>
+  <ul>
+    <li>Redesigned buttons</li>
+  </ul>
+  <h3>v2.2</h3>
+  <ul>
+    <li>Redesigned the rest of buttons</li>
+    <li>Added ratelimiter</li>
+    <li>Removed downtime</li>
+  </ul>
+  <h3>v2.21</h3>
+  <ul>
+    <li>You can toggle dark mode now</li>
+  </ul>
+  <h3>v2.22</h3>
+  <ul>
+    <li>Minified HTML, CSS, JS's localStorage dark mode</li>
+    <li>You can add admin accounts</li>
   </ul>
   <h3>Planned</h3>
   <ul>
     <li>Nest ternary operators</li>
   </ul>
-  <button onclick="location.href = '/'">Go back</button>
+  <button onclick="location.href = '/'" class='waves-effect waves-light btn green'>Go back</button>
+  <script src='script.js'>
+
+  </script>
 </body>
 
 </html>
