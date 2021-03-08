@@ -1,11 +1,11 @@
-const rick = "href"
+const rick = "location"
 const lS = localStorage
 
 function create() {
   let args = document.getElementById('wip').value
   let argz = document.getElementById('wip1').value
   if (args.startsWith(" ") || argz.startsWith(" ") || !args || !argz) return M.toast({html: "No arguments or blank arguments. (make sure you don't include spaces at the start)", classes: "red"})
-  if (args.includes(rick) || argz.includes(rick)) return M.toast({html: "href is blocked to prevent rickrolls", classes: "red"})
+  if (args.includes(rick) || argz.includes(rick)) return M.toast({html: "location is blocked to prevent rickrolls", classes: "red"})
   let xhr = new XMLHttpRequest()
   xhr.open("POST", "/create?item=" + args + "&user=" + argz)
   xhr.send()
@@ -27,18 +27,26 @@ function toggleDarkMode() {
 function createAdminAcc() {
   let args = document.getElementById('wip2').value
   let argz = document.getElementById('wip3').value
-  if (args.startsWith(" ") || argz.startsWith(" ") || !args || !argz) return M.toast({html: "No arguments or blank arguments. (make sure you don't include spaces at the start)", classes: "red"})
-  let xhr = new XMLHttpRequest()
-  xhr.open("POST", "/createAdminAccount?name=" + args + "&password=" + argz)
-  xhr.send()
-  document.getElementById('wip2').value = ""
-  document.getElementById('wip3').value = ""
-  M.toast({html: 'Created!', classes: "green"})
+  if (args.startsWith(" ") || !args) return M.toast({html: "Name required.", classes: "red"})
+  if (argz.startsWith(" ") || !argz) {
+    if (confirm("You are at risk of not having a password. Are you sure that you want to continue now?")) createNow()
+    return;
+  }
+  createNow()
+  function createNow() {
+    let xhr = new XMLHttpRequest()
+    xhr.open("POST", "/createAdminAccount?name=" + args + "&password=" + argz)
+    xhr.send()
+    document.getElementById('wip2').value = ""
+    document.getElementById('wip3').value = ""
+    M.toast({html: 'Created!', classes: "green"})
+  }
 }
 
 if (lS.dark) {
   document.body.style.backgroundColor = "#111212"
   document.body.style.color = "white"
+  document.getElementsByClassName("items")[0].style.color = "black"
   document.getElementsByClassName("news-ticker")[0].style.backgroundColor = "white"
   document.getElementsByClassName("news-ticker")[0].style.color = "black"
   document.getElementsByClassName("black")[0].style.color = "black"

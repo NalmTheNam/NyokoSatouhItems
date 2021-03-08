@@ -112,7 +112,6 @@ app.get("/deleteItem", (req, res) => {
 
 app.post("/createAdminAccount", (req, res) => {
   admins[req.query.name] = req.query.password
-  res.redirect("/didLogin?password=NamTheDuck")
 })
 
 app.get("/createAdminAcc", (req, res) => {

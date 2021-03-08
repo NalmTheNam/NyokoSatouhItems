@@ -3,8 +3,10 @@
 1. $ git clone https://github.com/TROLLBOX-USER/NyokoSatouhItems.git
 2. $ npm i express
 3. $ npm i express-basic-auth
-4. $ node index
-> If you want to have a public version, here's the link: https://nyokosatouhitems.nyokosatouhsato.repl.co
+4. $ npm i express-rate-limit
+5. $ node index
+
+> If you don't have node then install it [here](https://nodejs.org/en/), or if you want to have a public version, here's the link: https://nyokosatouhitems.nyokosatouhsato.repl.co
 
 ### If you want to collab here, follow these steps:
 1. If you have an discord account, DM me. (my account is NamIsAWinner#6429)
