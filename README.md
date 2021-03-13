@@ -28,4 +28,4 @@ but yooperhunter2#5826 might be able to contact Nam and (possibly) assist you, h
 
 > If you want to make a modification of NamItems, you can fork this repl.
 
-Glitch version can be found [here](https://weak-substantial-crystal.glitch.me/)
+Heroku version can be found [here](https://namitems.herokuapp.com/)
