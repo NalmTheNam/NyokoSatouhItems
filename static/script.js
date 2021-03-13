@@ -4,13 +4,20 @@ const lS = localStorage
 function create() {
   let args = document.getElementById('wip').value
   let argz = document.getElementById('wip1').value
-  if (args.startsWith(" ") || argz.startsWith(" ") || !args || !argz) return M.toast({html: "No arguments or blank arguments. (make sure you don't include spaces at the start)", classes: "red"})
-  if (args.includes(rick) || argz.includes(rick)) return M.toast({html: "location is blocked to prevent rickrolls", classes: "red"})
+  let arg = document.getElementById('wip2').value
+  let category = document.getElementById('wip3').value
+  if (args.startsWith(" ") || !args) return M.toast({html: "Item name required. (make sure you don't include spaces at the start)", classes: "red"})
+  if (args.includes(rick) || argz.includes(rick) || arg.includes(rick) || category.includes(rick)) return M.toast({html: "location is blocked to prevent rickrolls", classes: "red"})
+  if (argz.includes(" ") || !argz) argz = "anonymous"
+  if (arg.includes(" ") || !arg) arg = "No description set"
+  if (category.includes(" ") || !category) category = "No category set"
   let xhr = new XMLHttpRequest()
-  xhr.open("POST", "/create?item=" + args + "&user=" + argz)
+  xhr.open("POST", "/create?item=" + args + "&user=" + argz + "&description=" + arg + "&category=" + category)
   xhr.send()
   document.getElementById('wip').value = ""
   document.getElementById('wip1').value = ""
+  document.getElementById('wip2').value = ""
+  document.getElementById('wip3').value = ""
   M.toast({html: 'Created!', classes: "green"})
 }
 
@@ -25,8 +32,8 @@ function toggleDarkMode() {
 }
 
 function createAdminAcc() {
-  let args = document.getElementById('wip2').value
-  let argz = document.getElementById('wip3').value
+  let args = document.getElementById('wip4').value
+  let argz = document.getElementById('wip5').value
   if (args.startsWith(" ") || !args) return M.toast({html: "Name required.", classes: "red"})
   if (argz.startsWith(" ") || !argz) {
     if (confirm("You are at risk of not having a password. Are you sure that you want to continue now?")) createNow()
@@ -37,8 +44,8 @@ function createAdminAcc() {
     let xhr = new XMLHttpRequest()
     xhr.open("POST", "/createAdminAccount?name=" + args + "&password=" + argz)
     xhr.send()
-    document.getElementById('wip2').value = ""
-    document.getElementById('wip3').value = ""
+    document.getElementById('wip4').value = ""
+    document.getElementById('wip5').value = ""
     M.toast({html: 'Created!', classes: "green"})
   }
 }

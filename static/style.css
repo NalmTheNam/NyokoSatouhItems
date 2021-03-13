@@ -3,6 +3,29 @@
   text-align: center;
 }
 
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #dddcdc; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+hr {
+  border: 2px solid rgb(253, 73, 73);
+}
+
 button {
   border: none;
   cursor: pointer;

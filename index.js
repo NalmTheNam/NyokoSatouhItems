@@ -54,7 +54,7 @@ function web(t = "NamItems", a = "", d = false) {
     if (d) return "disabled='true' "
     else return " "
   }
-  return "<!DOCTYPE html><title>" + t + "</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><script src='script.js' defer></script><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br><button class='waves-effect waves-light btn green' onclick='toggleDarkMode()'>Toggle dark mode</button><br><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\" class='waves-effect waves-light btn green'>Create an item</button><br><br><button onclick=\"location.href = '/admin'\" " + disabled() + "class='waves-effect waves-black btn'>Admin Login</button>" + a + "<hr><h4>Misc</h4><hr><button onclick=\"location.href = '/achievements'\" class='card-panel teal lighten-2'>Achievements</button><br><button class='waves-effect waves-light btn black' onclick=\"location.href = '/mods'\">Modifications</button><br><br><nav><button onclick=\"location.href = '/about'\" class='waves-effect waves-light btn-small green'>About</button> <button onclick=\"location.href = '/changelogs'\" class='waves-effect waves-light btn-small green'>Changelogs</button></nav><br>Current Version: v2.22"
+  return "<!DOCTYPE html><title>" + t + "</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><script src='script.js' defer></script><link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br><button class='waves-effect waves-light btn green' onclick='toggleDarkMode()'>Toggle dark mode</button><br><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\" class='waves-effect waves-light btn green'>Create an item</button><br><br><button onclick=\"location.href = '/admin'\" " + disabled() + "class='waves-effect waves-black btn'>Admin Login</button>" + a + "<hr><h4>Misc</h4><hr><button onclick=\"location.href = '/achievements'\" class='card-panel teal lighten-2'>Achievements</button><br><button class='waves-effect waves-light btn black' onclick=\"location.href = '/mods'\">Modifications</button><br><br><nav><button onclick=\"location.href = '/about'\" class='waves-effect waves-light btn-small green'>About</button> <button onclick=\"location.href = '/changelogs'\" class='waves-effect waves-light btn-small green'>Changelogs</button></nav><br>Current Version: v2.223"
 }
 
 app.get("/", (req, res) => {
@@ -70,7 +70,7 @@ app.get("/changelogs", (req, res) => {
 })
 
 app.post("/create", (req, res) => {
-  items.push(req.query.user + " made " + req.query.item + " | " + new Date())
+  items.push(req.query.user + " made " + req.query.item + " | " + new Date() + " | " + req.query.description + " | Category: " + req.query.category)
   recentUser = req.query.user
 })
 
@@ -87,8 +87,25 @@ app.get("/admin", (req, res) => {
 })
 
 app.get("/didLogin", basic, (req, res) => {
-  banned.includes(req.ip) ? res.status(429).sendFile(__dirname + "/banned.html") : !req.query.password ? res.status(403).sendFile(__dirname + "/empty.html") : uuid(req.query.password) == password ? res.send(web("NamItems as Admin", "<br><br><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\" class='waves-effect waves-light btn red'>Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\" class='waves-effect waves-light btn red'>Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\" class='waves-effect waves-light btn red'>Delete all items</button><br><br><button onclick=\"location.href = '/deletedItems'\" class='waves-effect waves-light btn green'>Show deleted items</button><br><br><button  class='waves-effect waves-light btn lime'  onclick='location.href = `/createAdminAcc?password=NamTheDuck`'>Create Admin Account</button>", true)) : res.status(403).sendFile(__dirname + "/wrong.html");
+  if (req.auth.user == "ebicgamer2007" && req.auth.password == "bowtostern") return res.send("<h1 style='color:red'>Your password is insecure.</h1><p>Insecure passwords on your backup accounts can be serious.</p>")
+  banned.includes(req.ip) ? res.status(429).sendFile(__dirname + "/banned.html") : !req.query.password ? res.status(403).sendFile(__dirname + "/empty.html") : uuid(req.query.password) == password ? res.send(web("NamItems as Admin", "<br><br><button onclick=\"location.href = '/deletedItems'\" class='waves-effect waves-light btn green'>Show deleted items</button><br><br><button class='waves-effect waves-light btn lime' onclick='location.href = `/createAdminAcc?password=NamTheDuck`'>Create Admin Account</button><hr><h4>DANGER ZONE</h4><hr><button onclick=\"location.replace('/deleteItem?direction=last&password='+location.search.replace('?password=',''))\" class='waves-effect waves-light btn red'>Delete last item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=first&password='+location.search.replace('?password=',''))\" class='waves-effect waves-light btn red'>Delete first item</button><br><br><button onclick=\"location.replace('/deleteItem?direction=all&password='+location.search.replace('?password=',''))\" class='waves-effect waves-light btn red'>Delete all items</button><br><br><button class='waves-effect waves-light btn red' onclick='location.href = `/freezeAccountCreation?password=NamTheDuck`'>Freeze Admin Account Creation</button>", true)) : res.status(403).sendFile(__dirname + "/wrong.html");
+  console.log(req.auth.user + " entered the admin panel! Keep track of him.")
 })
+
+app.get("/freezeAccountCreation", (req, res) => {
+  if (!req.query.password) return res.status(403).send("Access denied")
+  if (uuid(req.query.password) == password) {
+    Object.seal(admins)
+    res.redirect("/didLogin?password=NamTheDuck")
+  } else {
+    res.status(403).send("Access denied")
+  }
+})
+
+app.get("/resetPass", basic, (req, res) => {
+  admins[req.auth.user] = req.query.password
+  res.redirect("/didLogin?password=NamTheDuck")
+}) 
 
 app.get("/deleteItem", (req, res) => {
   if (!req.query.password) return res.status(403).send("Access denied")
@@ -116,6 +133,7 @@ app.post("/createAdminAccount", (req, res) => {
 
 app.get("/createAdminAcc", (req, res) => {
   if (!req.query.password) return res.status(403).send("Access denied")
+  if (Object.isSealed(admins)) return res.status(403).send("You cannot add admin accounts currently.")
   if (uuid(req.query.password) == password) {
     res.sendFile(__dirname + "/createadmin.html")
   } else {
@@ -124,7 +142,7 @@ app.get("/createAdminAcc", (req, res) => {
 })
 
 app.get("/deletedItems", (req, res) => {
-  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : res.send("<!DOCTYPE html><title>Deleted Items</title><link href='style.css' rel='stylesheet'><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><script src='script.js' defer></script><div class='items'><h1>Deleted Items</h1></div><h2>These are non-items. Take care of it.</h2>" + deleteditems.join("<br>") + "<br><br><button onclick=\"location.href = '/'\" class='waves-effect waves-light btn green'>Go back</button><br><br><button onclick=\"location.replace('/restoreItem?direction=last&password=NamTheDuck')\" class='waves-effect waves-light btn green'>Restore last item</button><br><br><button onclick=\"location.replace('/restoreItem?direction=first&password=NamTheDuck')\" class='waves-effect waves-light btn green'>Restore first item</button><br><br><button onclick=\"location.replace('/restoreItem?direction=all&password=NamTheDuck')\" class='waves-effect waves-light btn green'>Restore all items</button><div class='danger'><h2>DANGER ZONE</h2><button onclick=\"location.replace('/deletePermamently?direction=last')\" class='waves-effect waves-light btn red'>Delete last item permamently</button><br><br><button onclick=\"location.replace('/deletePermamently?direction=first')\" class='waves-effect waves-light btn red'>Delete first item permamently</button><br><br><button onclick=\"location.replace('/deletePermamently?direction=all')\" class='waves-effect waves-light btn red'>Delete all items permamently</button>");
+  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : res.send("<!DOCTYPE html><title>Deleted Items</title><link href='style.css' rel='stylesheet'><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><script src='script.js' defer></script><div class='items'><h1>Deleted Items</h1></div><h3>These are non-items. Take care of it.</h3>" + deleteditems.join("<br>") + "<br><br><button onclick=\"location.href = '/didLogin?password=NamTheDuck'\" class='waves-effect waves-light btn green'>Go back</button><br><br><button onclick=\"location.replace('/restoreItem?direction=last&password=NamTheDuck')\" class='waves-effect waves-light btn green'>Restore last item</button><br><br><button onclick=\"location.replace('/restoreItem?direction=first&password=NamTheDuck')\" class='waves-effect waves-light btn green'>Restore first item</button><br><br><button onclick=\"location.replace('/restoreItem?direction=all&password=NamTheDuck')\" class='waves-effect waves-light btn green'>Restore all items</button><hr><h3>DANGER ZONE</h3><hr><button onclick=\"location.replace('/deletePermamently?direction=last')\" class='waves-effect waves-light btn red'>Delete last item permamently</button><br><br><button onclick=\"location.replace('/deletePermamently?direction=first')\" class='waves-effect waves-light btn red'>Delete first item permamently</button><br><br><button onclick=\"location.replace('/deletePermamently?direction=all')\" class='waves-effect waves-light btn red'>Delete all items permamently</button>");
 })
 
 app.get("/mods", (req, res) => {
@@ -191,3 +209,5 @@ setInterval(() => {
   fs.writeFileSync("./save/savefle3.json", JSON.stringify(recentUser));
   fs.writeFileSync("./save/savefle4.json", JSON.stringify(admins));
 }, 5000)
+
+//hello.
