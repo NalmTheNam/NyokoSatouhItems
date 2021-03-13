@@ -199,7 +199,7 @@ app.use((err, req, res, next) => {
   res.status(500).sendFile(__dirname + "/err.html")
 })
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Listening...")
 })
 
