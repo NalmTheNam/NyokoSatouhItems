@@ -10,7 +10,7 @@ const limiter = rateLimit({
   max: 25
 });
 
-// let i = 0
+// let i;
 
 function checkAch(c = false) {
   if (c) return "<div class='ach complete'>" + ach.completed.join("<br>") + "</div>"

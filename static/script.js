@@ -8,9 +8,9 @@ function create() {
   let category = document.getElementById('wip3').value
   if (args.startsWith(" ") || !args) return M.toast({html: "Item name required. (make sure you don't include spaces at the start)", classes: "red"})
   if (args.includes(rick) || argz.includes(rick) || arg.includes(rick) || category.includes(rick)) return M.toast({html: "location is blocked to prevent rickrolls", classes: "red"})
-  if (argz.includes(" ") || !argz) argz = "anonymous"
-  if (arg.includes(" ") || !arg) arg = "No description set"
-  if (category.includes(" ") || !category) category = "No category set"
+  if (argz.startsWith(" ") || !argz) argz = "anonymous"
+  if (arg.startsWith(" ") || !arg) arg = "No description set"
+  if (category.startsWith(" ") || !category) category = "No category set"
   let xhr = new XMLHttpRequest()
   xhr.open("POST", "/create?item=" + args + "&user=" + argz + "&description=" + arg + "&category=" + category)
   xhr.send()
