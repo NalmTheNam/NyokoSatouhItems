@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Deleted Items</title>
+  <link href='style.css' rel='stylesheet'>
+  <link href='style.css' rel='stylesheet'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
+  <script src='script.js' defer></script>
+</head>
+
+<body>
+  <div class='items'>
+    <h1>Deleted Items</h1>
+  </div>
+  <h3>These are non-items. Take care of it.</h3><% if (!deleted) { %>No deleted items.
+  <% } %><%- deleted %><br><br><button onclick="location.href='/didLogin?password=NamTheDuck'" class='waves-effect waves-light btn green'>Go back</button><br><br><button onclick="location.replace('/restoreItem?direction=last&password=NamTheDuck')" class='waves-effect waves-light btn green'>Restore last item</button><br><br><button onclick="location.replace('/restoreItem?direction=first&password=NamTheDuck')" class='waves-effect waves-light btn green'>Restore first item</button><br><br><button onclick="location.replace('/restoreItem?direction=all&password=NamTheDuck')" class='waves-effect waves-light btn green'>Restore all items</button>
+  <hr><h3>DANGER ZONE</h3><hr><button onclick="location.replace('/deletePermamently?direction=last')" class='waves-effect waves-light btn red'>Delete last item permamently</button><br><br><button onclick="location.replace('/deletePermamently?direction=first')" class='waves-effect waves-light btn red'>Delete first item permamently</button><br><br><button onclick="location.replace('/deletePermamently?direction=all')" class='waves-effect waves-light btn red'>Delete all items permamently</button>
+</body>
+
+</html>

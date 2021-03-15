@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Guest Profile</title>
+    <link href="/style.css" rel="stylesheet">
+	  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'>
+  	<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'>
+
+	  </script>
+  </head>
+  <body>
+    <h1>Guest Profile <i>(username <%= guestName %>)</i> stats</h1><hr><p>Items created in this guest profile: <% if (
+    !createdItems) { %>None.<% } %><%- createdItems %></p>
+    <p>Items that are deleted in this guest profile: <% if (
+    !deletedItems) { %>None.<% } %><%- deletedItems %></p>
+    <button onclick="location.href='/didLogin?password=NamTheDuck'" class='waves-effect waves-light btn green'>Go back</button>
+    <script src="/script.js"></script>
+  </body>
+</html>
