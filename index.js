@@ -56,7 +56,7 @@ function web(t = "NamItems", a = "", d = false) {
     if (d) return "disabled='true' "
     else return " "
   }
-  return "<!DOCTYPE html><title>" + t + "</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><script src='script.js' defer></script><link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br><button class='waves-effect waves-light btn green' onclick='toggleDarkMode()'>Toggle dark mode</button><br><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\" class='waves-effect waves-light btn green'>Create an item</button><br><br><button onclick=\"location.href = '/admin'\" " + disabled() + "class='waves-effect waves-black btn'>Admin Login</button>" + a + "<hr><h4>Misc</h4><hr><button onclick=\"location.href = '/achievements'\" class='card-panel teal lighten-2'>Achievements</button><br><button class='waves-effect waves-light btn black' onclick=\"location.href = '/mods'\">Modifications</button><br><br><nav><button onclick=\"location.href = '/about'\" class='waves-effect waves-light btn-small green'>About</button> <button onclick=\"location.href = '/changelogs'\" class='waves-effect waves-light btn-small green'>Changelogs</button></nav><br>Current Version: v2.231"
+  return "<!DOCTYPE html><title>" + t + "</title><link href='style.css' rel='stylesheet'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script><script src='script.js' defer></script><link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'><div class='news-tcontainer'><div class='news-ticker'><div class='news-ticker-wrap'><div class='news-ticker-move'>BREAKING NEWS: " + newsThing + "</div></div></div></div><br><div class='items'><h1>Items</h1></div><br><button class='waves-effect waves-light btn green' onclick='toggleDarkMode()'>Toggle dark mode</button><br><br>" + items.join("<br>") + "<br><br><button onclick=\"location.href = '/createItem'\" class='waves-effect waves-light btn green'>Create an item</button><br><br><button onclick=\"location.href = '/admin'\" " + disabled() + "class='waves-effect waves-black btn'>Admin Login</button>" + a + "<hr><h4>Misc</h4><hr><button onclick=\"location.href = '/achievements'\" class='card-panel teal lighten-2'>Achievements</button><br><button class='waves-effect waves-light btn black' onclick=\"location.href = '/mods'\">Modifications</button><br><br><button class='waves-effect waves-light btn blue' onclick=\"location.href = '/searchItem'\">Search an item</button><br><br><nav><button onclick=\"location.href = '/about'\" class='waves-effect waves-light btn-small green'>About</button> <button onclick=\"location.href = '/changelogs'\" class='waves-effect waves-light btn-small green'>Changelogs</button></nav><br>Current Version: v2.233"
 }
 
 app.get("/", (req, res) => {
@@ -113,6 +113,14 @@ app.get("/lookUp", (req, res) => {
   banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : res.sendFile(__dirname + "/lookup.html")
 })
 
+app.get("/search", (req, res) => {
+  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : res.render("itemsoutput", { searchedFor: req.query.q, result: items.filter(itemName => itemName.includes(req.query.q)) })
+})
+
+app.get("/searchItem", (req, res) => {
+  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : res.sendFile(__dirname + "/search.html")
+})
+
 app.get("/deleteItem", (req, res) => {
   if (!req.query.password) return res.status(403).send("Access denied")
   if (uuid(req.query.password) == password) {
@@ -163,7 +171,13 @@ app.get("/guests/:name", (req, res) => {
   banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : res.render("guestprofile", { 
     guestName: req.params.name, 
     createdItems: items.filter(name => name.startsWith(req.params.name)).join("<br>"),
-    deletedItems: deleteditems.filter(name => name.startsWith(req.params.name)).join("<br>")
+    deletedItems: deleteditems.filter(name => name.startsWith(req.params.name)).join("<br>"),
+    isAdmin() {
+      if (admins[req.params.name]) {
+        return true
+      }
+      return false
+    }
   })
 })
 

@@ -13,6 +13,7 @@
     !createdItems) { %>None.<% } %><%- createdItems %></p>
     <p>Items that are deleted in this guest profile: <% if (
     !deletedItems) { %>None.<% } %><%- deletedItems %></p>
+    <p>Is admin?: <%= isAdmin() %></p>
     <button onclick="location.href='/didLogin?password=NamTheDuck'" class='waves-effect waves-light btn green'>Go back</button>
     <script src="/script.js"></script>
   </body>
