@@ -10,10 +10,8 @@
 </head>
 
 <body>
-  <div class='items'>
-    <h1>You searched for: <%= searchedFor %></h1>
-  </div>
-  <p>Result: <% if (result == "") { %>No results found.<% } %><%= result %></p>
+  <h1>You searched for: <%= searchedFor %></h1>
+  <p>Result: <% if (result == "") { %>No results found.<% } %><%- result %></p>
   <button onclick="location.href='/'" class='waves-effect waves-light btn green'>Go back</button>
 </body>
 

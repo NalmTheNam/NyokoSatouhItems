@@ -1,11 +1,8 @@
 # NyokoSatouhItems
 ### Install (if you have git):
 1. $ git clone https://github.com/TROLLBOX-USER/NyokoSatouhItems.git
-2. $ npm i express
-3. $ npm i express-basic-auth
-4. $ npm i express-rate-limit
-5. $ npm i ejs
-6. $ node index
+2. $ npm i express express-basic-auth express-rate-limit ejs body-parser
+3. $ node index
 
 > If you don't have node then install it [here](https://nodejs.org/en/), or if you want to have a public version, here's the link: https://nyokosatouhitems.nyokosatouhsato.repl.co
 

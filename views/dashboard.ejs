@@ -12,8 +12,8 @@
     <h1>Admin Dashboard</h1>
     <p>Your username: <%= username %></p>
     <p>Your password: <%= password %></p>
-    <form action="/changePass" method="get">
-      <label for="password">New password:<label>
+    <form action="/changePass" method="post">
+      <label for="password">New password:</label>
       <input type="text" id="password" name="password"><br><br>
       <input type="submit" value="Submit!" class="waves-effect waves-light btn green"><br><br>
     </form>

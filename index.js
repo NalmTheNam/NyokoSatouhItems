@@ -1,21 +1,22 @@
+// Modules
 const express = require("express")
 const basicAuth = require("express-basic-auth")
 const rateLimit = require("express-rate-limit");
+const bodyParser = require("body-parser")
 const app = express();
 const fs = require("fs");
 const ach = require("./ach.json")
-const banned = []
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 25
-});
 
-// let i;
-
+/**
+ * Displays all achievements
+ * @param {boolean} [c] Check if incomplete or completed.
+*/
 function checkAch(c = false) {
   if (c) return "<div class='ach complete'>" + ach.completed.join("<br>") + "</div>"
   else return "<div class='ach'>" + ach.incomplete.join("<br>") + "</div>"
 }
+
+// Main code
 
 var uuid = require("./uuid.js").uuid;
 let password = "K3SH-7HHC-2YK3-EFPM-N2US-9M5D-HLTB";
@@ -33,9 +34,18 @@ const basic = basicAuth({
   realm: "Admin Panel",
   unauthorizedResponse: "Access denied"
 })
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 25
+})
+/**
+ * Check banned users
+*/
+const banned = []
 const news = ["There is a total of " + items.length + " items", "Recent name made an item is " + recentUser]
 let randomizeNews = Math.floor(Math.random() * news.length)
 let newsThing = news[randomizeNews]
+
 setInterval(() => {
   randomizeNews = Math.floor(Math.random() * news.length)
   newsThing = news[randomizeNews]
@@ -48,6 +58,10 @@ app.enable('case sensitive routing')
 app.use(express.static("./static"))
 
 app.use(limiter)
+
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(bodyParser.json());
 
 app.set("view engine", "ejs")
 
@@ -104,8 +118,8 @@ app.get("/freezeAccountCreation", (req, res) => {
   }
 })
 
-app.get("/changePass", basic, (req, res) => {
-  admins[req.auth.user] = req.query.password
+app.post("/changePass", basic, (req, res) => {
+  admins[req.auth.user] = req.body.password
   res.redirect("/adminDashboard")
 }) 
 
@@ -114,7 +128,7 @@ app.get("/lookUp", (req, res) => {
 })
 
 app.get("/search", (req, res) => {
-  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : res.render("itemsoutput", { searchedFor: req.query.q, result: items.filter(itemName => itemName.includes(req.query.q)) })
+  banned.includes(req.ip) ? res.status(403).sendFile(__dirname + "/banned.html") : res.render("itemsoutput", { searchedFor: req.query.q, result: items.filter(itemName => itemName.includes(req.query.q)).join("<br>") })
 })
 
 app.get("/searchItem", (req, res) => {
