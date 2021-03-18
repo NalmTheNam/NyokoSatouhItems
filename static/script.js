@@ -1,4 +1,4 @@
-const rick = "location"
+const rick = ["location", "href"]
 const lS = localStorage
 
 function create() {
@@ -7,7 +7,7 @@ function create() {
   let arg = document.getElementById('wip2').value
   let category = document.getElementById('wip3').value
   if (args.startsWith(" ") || !args) return M.toast({html: "Item name required. (make sure you don't include spaces at the start)", classes: "red"})
-  if (args.includes(rick) || argz.includes(rick) || arg.includes(rick) || category.includes(rick)) return M.toast({html: "location is blocked to prevent rickrolls", classes: "red"})
+  if (rick.includes(args) || rick.includes(argz) || rick.includes(arg) || rick.includes(category)) return M.toast({html: "href and location is blocked to prevent rickrolls", classes: "red"})
   if (argz.startsWith(" ") || !argz) argz = "anonymous"
   if (arg.startsWith(" ") || !arg) arg = "No description set"
   if (category.startsWith(" ") || !category) category = "No category set"

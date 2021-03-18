@@ -26,4 +26,4 @@ but yooperhunter2#5826 might be able to contact Nam and (possibly) assist you, h
 
 > If you want to make a modification of NamItems, you can fork this repl.
 
-Heroku version can be found [here](https://namitems.herokuapp.com/) (deleted!)
+Old NamItems can be found [here](https://mega.nz/folder/wl0iFQDT#K6z_DUFWcBcq1dKne-r-SA)
