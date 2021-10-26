@@ -16,5 +16,6 @@
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
     "express-rate-limit": "^5.2.6"
-  }
+  },
+  "homepage": "https://nalmthenam.github.io/NyokoSatouhItems"
 }
